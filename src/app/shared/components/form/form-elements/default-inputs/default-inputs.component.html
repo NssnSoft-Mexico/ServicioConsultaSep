@@ -1,0 +1,153 @@
+<app-page-breadcrumb 
+  Title="Sistema para la asignación aleatoria del número identificador para los proyectos que participarán la Consulta de Presupuesto Participativo 2026-2027" 
+  pageTitle="Asignación Directa" 
+/>
+
+<div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 mb-6">
+
+    <div class="h-full">
+      <div class="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Seleccione Unidad Territorial</mat-label>
+          <mat-select 
+            (selectionChange)="onDistritoChange($event.value)" 
+            #unidadModel="ngModel"
+            disableRipple 
+            required
+            name="unidad"
+            [(ngModel)]="selectedUnidad">
+            <mat-option *ngFor="let unidad of unidades" [value]="unidad">
+              {{ unidad.ut }} - {{ unidad.clave_ut }} 
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="unidadModel.invalid && unidadModel.touched">
+            La unidad territorial es obligatoria
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- <div class="h-full">
+      <div class="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
+        <mat-form-field class="w-full" appearance="outline">
+          <mat-label>Selecciona el año</mat-label>
+          <mat-select 
+            required
+            name="anio"
+            disableRipple
+            [disabled]="!utSeleccionada"
+            (selectionChange)="onChangeAnio()" 
+            [(value)]="selectedAnio">
+            <mat-option [value]="2026">
+              2026
+            </mat-option>
+            <mat-option [value]="2027">
+              2027
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="selectedAnio === ''">
+            El año es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <app-user-meta-card class="h-full block"></app-user-meta-card>
+    </div>
+  </div> -->
+</div>
+
+<div *ngIf="mostrarDiv" class="mt-6 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-6">
+
+    <div class="h-full">
+      <div class="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
+        <div class="flex flex-col items-center justify-center text-center w-full gap-2">            
+          <mat-icon class="iconAprove">inventory</mat-icon>
+          <label>Poyectos aprobados </label>
+          <label>{{aprobados}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-full">
+      <div class="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
+        <div class="flex flex-col items-center justify-center text-center w-full gap-2">
+          <mat-icon class="iconSort">inventory</mat-icon>
+          <label> Proyectos sorteados </label>
+          <label>{{sorteados}}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-full">
+      <div class="p-5 border border-gray-200 rounded-2xl dark:border-gray-800 lg:p-6">
+        <div class="flex flex-col items-center justify-center text-center w-full gap-2">
+          <mat-icon class="iconSorte">inventory</mat-icon>
+          <label>Poyectos por sortear</label>
+          <label>{{sortear}}</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+
+<div *ngIf="mostrarDiv" class="mt-6 rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] lg:p-6">
+  <div class="flex justify-center mb-6">
+    <mat-card-title *ngIf="!sorteoIniciado" class="label-header">Proyectos de la Unidad Territorial por sortear</mat-card-title>
+    <mat-card-title *ngIf="sorteoIniciado" class="label-header">Proyectos de la Unidad Territorial sorteados</mat-card-title>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 mb-6">
+
+    
+    <div class="h-full">
+      <div id="container" #canvasContainer>
+        <canvas #canvas width="800" height="300"></canvas>
+      </div>
+    </div>
+
+    <div class="h-full">
+      <table class="w-full text-left">
+      <thead class="border-y border-gray-100 dark:border-gray-800">
+        <tr>
+          <th class="text-center py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400">Consecutivo</th>
+          <th class="text-center py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400">Folio de Registro</th>
+          <th class="text-center py-3 font-medium text-gray-500 text-theme-xs dark:text-gray-400">Número Aleatorio</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+        @for (product of proyectos; track $index) {
+        <tr>
+          <td class="py-3 text-center text-gray-500 text-theme-sm dark:text-gray-400">
+            {{ $index + 1 }}
+          </td>
+          <td class="py-3 text-center text-gray-500 text-theme-sm dark:text-gray-400">
+            {{ product.folio }}
+          </td>
+          <td class="py-3 text-center text-gray-500 text-theme-sm dark:text-gray-400">
+            {{ product.numero }}
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="justify-center mb-6">
+    <mat-grid-list cols="2" rowHeight="100px">
+      <mat-grid-tile *ngIf="!sorteoIniciado" [colspan]="1" [rowspan]="1">
+          <button class="buttonSorteo" [disabled]="!motivoSeleccionado || !fechaSeleccionada || !id_o || !motivo || !expediente" mat-fab extended color="primary" (click)="soloClick()">Iniciar el Sorteo</button>
+      </mat-grid-tile>
+        <mat-grid-tile *ngIf="sorteoIniciado" [colspan]="1" [rowspan]="1">
+          <button [disabled]="creoSorteo" class="buttonAsignar" mat-fab extended color="accent"  (click)="aceptarSorteo()">
+              <span *ngIf="sorteoIniciado">Asignar</span>
+          </button>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <button class="buttonSorteoD" mat-fab extended color="warn" (click)="deshacerSorteo()">Cancelar</button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div> 
