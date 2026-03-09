@@ -4,9 +4,9 @@ import { ButtonComponent } from '../../ui/button/button.component';
 import { InputFieldComponent } from '../../form/input/input-field.component';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../../services/authService/auth.service';
-import Swal from 'sweetalert2'
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { CedulaService } from '../../../services/authService/auth.service';
 
 @Component({
   selector: 'app-signin-form',
@@ -23,56 +23,41 @@ import { CommonModule } from '@angular/common';
 })
 export class SigninFormComponent {
 
-  showPassword = false;
-  isChecked = false;
+  muestraDatosCedula: boolean = false;
+  cedula = '';
+  resultado: any;
 
-  username = '';
-  password = '';
-
-  constructor(private auth: AuthService, private router: Router) {}
-
-  ngOnInit() {
-    sessionStorage.removeItem('key');
-    sessionStorage.removeItem('dir');
-    sessionStorage.removeItem('tipoUsuario');
-    sessionStorage.removeItem('nameUsuario');
-  }
-
-  togglePasswordVisibility() {
-    this.showPassword = !this.showPassword;
-  }
+  constructor(private http: HttpClient, private cedulaService: CedulaService) {}
   
-  onSignIn() {
+  changeCedula(cedulaValor: any) {
+    console.log('El texto cambió a:', cedulaValor);
+    this.buscarCedula(cedulaValor)
+    // Ejecutar tu método aquí
+  }
+
+  buscarCedula(cedulaParameter: string) {
 
     try {
-      
-      this.auth.login(this.username, this.password).subscribe({
-        next: (res) => {
-          sessionStorage.setItem("key", res.token);
-          sessionStorage.setItem("dir", res.userData[0].distrital);
-          sessionStorage.setItem("tipoUsuario", res.userData[0].tipo_usuario);
-          sessionStorage.setItem("nameUsuario", res.userData[0].footer);
-          this.router.navigate(['/']);
-        },
-        error: err => {
-          if(err.error.code === 401){
-            Swal.fire({
-              icon: "error",
-              title: "Usuario inactivo",
-              text: "Por favor contacta al Administrador del Sistema",
-            });
-          } else if(err.error.code === 101) {
-            Swal.fire({
-              icon: "error",
-              title: "Usuario no encontrado",
-              text: "Por favor contacta al Administrador del Sistema",
-            });
-          }
-        } 
-      });
 
-    } catch (error) {
-      console.error("Error al iniciar sesión", error);
-    }
+      this.cedulaService.buscarCedula(cedulaParameter)
+        .subscribe({
+          next: (resp) => {
+            this.resultado = resp;
+            console.log(resp);
+
+            this.muestraDatosCedula = true;
+          },
+          error: (err) => {
+            this.muestraDatosCedula = true;
+            console.error(err);
+          }
+        });
+      } catch(error) {
+        console.log(error)
+      }
+  }
+
+  guardaRegistros() {
+    
   }
 }
