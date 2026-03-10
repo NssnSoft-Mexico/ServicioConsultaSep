@@ -1,0 +1,68 @@
+## Build results
+bin/
+obj/
+[Bb]uild/
+[Ll]og/
+[Ll]ogs/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.VC.db
+
+## Visual Studio
+.vs/
+.vscode/
+*.dbmdl
+*.pdb
+
+## Rider
+.idea/
+*.sln.iml
+
+## DotNet CLI
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## ASP.NET
+wwwroot/node_modules/
+wwwroot/dist/
+node_modules/
+bower_components/
+
+## Configuration files
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+## Logs
+*.log
+
+## OS-specific files
+.DS_Store
+Thumbs.db
+
+## Test results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+*.testsettings
+
+## EF Migrations snapshot (optional)
+*Migrations/*.Designer.cs
+*Migrations/*ModelSnapshot.cs
+
+## Nuke build system (if used)
+.nuke/
+
+## JetBrains Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+## Others
+.env
+*.bak
