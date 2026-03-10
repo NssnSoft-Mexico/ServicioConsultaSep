@@ -1,36 +1,51 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../enviroment/enviroment';
+import { catchError, Observable, throwError } from 'rxjs';
+
+export interface CedulaProfesional {
+  id?: number;
+  cedula: string;
+  nombre: string;
+  paterno: string;
+  materno: string;
+  institucion: string;
+  carrera: string;
+  correo: string;
+  telefono: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CedulaService {
 
-  private url = 'https://cedulaprofesional.sep.gob.mx/';
   private apiUrl = `${environment.apiUrl}`;
   
   constructor(private http: HttpClient) {}
 
-  buscarCedula(idCedula: string) {
-
-    const query = {
-      maxResult: "100",
-      nombre: "",
-      paterno: "",
-      materno: "",
-      idCedula: idCedula
-    };
-
-    const params = new HttpParams()
-      .set('json', JSON.stringify(query));
-
-    return this.http.get(this.url, { params });
-
+  buscarCedula(cedula: string): Observable<CedulaProfesional> {
+    return this.http.get<CedulaProfesional>(`${this.apiUrl}cedulas/${cedula}`)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-  guardaRegistros() {
+  guardarRegistro(cedula: CedulaProfesional): Observable<CedulaProfesional> {
+    return this.http.post<CedulaProfesional>(this.apiUrl + 'cedulas', cedula)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
+  private handleError(error: HttpErrorResponse) {
+    let mensaje = 'Ocurrió un error inesperado';
+    if (error.error?.mensaje) {
+      mensaje = error.error.mensaje;
+    } else if (error.status === 0) {
+      mensaje = 'No se pudo conectar con el servidor';
+    }
+    return throwError(() => new Error(mensaje));
   }
 
 }

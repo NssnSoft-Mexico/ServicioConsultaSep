@@ -1,83 +1,122 @@
 <div class="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
   <div class="mt-6">
-
-    <div class="space-y-6 mb-6">
+    <form [formGroup]="form" (ngSubmit)="guardarRegistros()" class="max-w-xl mx-auto p-6 bg-white rounded-lg shadow-md space-y-4">
       <div>
-        <app-label>Cedula<span class="text-error-500">*</span></app-label>
-        <app-input-field
-          type="text"
-          placeholder="cedula"
-          [value]="cedula" 
-          (valueChange)="changeCedula($event)"
-          name="cedula"
-          class="form-input"
-          required
-        />
+        <label class="block font-medium">Cédula<span class="text-red-500">*</span></label>
+        <input formControlName="cedula" type="text" placeholder="Cédula"
+          class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        <p *ngIf="f['cedula'].touched && f['cedula'].errors" class="text-red-500 text-sm">La cédula es obligatoria</p>
       </div>
-    </div>
+      @if(muestraDatosCedula){
+        <div>
+          <label class="block font-medium">Nombre<span class="text-red-500">*</span></label>
+          <input formControlName="nombre" type="text" placeholder="Nombre"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          <p *ngIf="f['nombre'].touched && f['nombre'].errors?.['required']" class="text-red-500 text-sm">El nombre es obligatorio</p>
+          <p *ngIf="f['nombre'].touched && f['nombre'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo se permiten letras</p>
+        </div>
 
-    @if(muestraDatosCedula){
-      <div class="space-y-6">
         <div>
-          <app-label>Usuario <span class="text-error-500">*</span></app-label>
-          <app-input-field
-            type="text"
-            placeholder="Nombre"
-            name="Nombre"
-            class="form-input"
-            required
-          />
+          <label class="block font-medium">Primer Apellido<span class="text-red-500">*</span></label>
+          <input formControlName="primerApellido" type="text" placeholder="Primer Apellido"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          <p *ngIf="f['primerApellido'].touched && f['primerApellido'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
+          <p *ngIf="f['primerApellido'].touched && f['primerApellido'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
         </div>
-        <div>
-          <app-label>Usuario <span class="text-error-500">*</span></app-label>
-          <app-input-field
-            type="text"
-            placeholder="Primer Apellido"
-            name="username"
-            class="form-input"
-            required
-          />
-        </div>
-        <div>
-          <app-label>Usuario <span class="text-error-500">*</span></app-label>
-          <app-input-field
-            type="text"
-            placeholder="Segundo Apellido"
-            name="username"
-            class="form-input"
-            required
-          />
-        </div>
-        <div>
-          <app-label>Usuario <span class="text-error-500">*</span></app-label>
-          <app-input-field
-            type="text"
-            placeholder="Teléfóno"
-            name="username"
-            class="form-input"
-            required
-          />
-        </div>
-        <div>
-          <app-label>Usuario <span class="text-error-500">*</span></app-label>
-          <app-input-field
-            type="text"
-            placeholder="Correo Electrónico"
-            name="username"
-            class="form-input"
-            required
-          />
-        </div>
-        <app-button
-          className="w-full button-auth"
-          size="sm"
-          (btnClick)="guardaRegistros()"
-        >
-          Guarda Registros
-        </app-button>
 
-      </div>
-    }
+        <div>
+          <label class="block font-medium">Segundo Apellido<span class="text-red-500">*</span></label>
+          <input formControlName="segundoApellido" type="text" placeholder="Segundo Apellido"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          <p *ngIf="f['segundoApellido'].touched && f['segundoApellido'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
+          <p *ngIf="f['segundoApellido'].touched && f['segundoApellido'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
+        </div>
 
+        <div>
+          <label class="block font-medium">Institución<span class="text-red-500">*</span></label>
+          <input formControlName="institucion" type="text" placeholder="Institución"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          <p *ngIf="f['institucion'].touched && f['institucion'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
+          <p *ngIf="f['institucion'].touched && f['institucion'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
+        </div>
+
+        <div>
+          <label class="block font-medium">Carrera<span class="text-red-500">*</span></label>
+          <input formControlName="carrera" type="text" placeholder="Carrera"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          <p *ngIf="f['carrera'].touched && f['carrera'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
+          <p *ngIf="f['carrera'].touched && f['carrera'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
+        </div>
+
+        <div>
+          <label class="block font-medium">Correo<span class="text-red-500">*</span></label>
+          <input formControlName="correo" type="email" placeholder="Correo"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          <p *ngIf="f['correo'].touched && f['correo'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
+          <p *ngIf="f['correo'].touched && f['correo'].errors?.['email']" class="text-red-500 text-sm">Correo no válido</p>
+        </div>
+
+        <div>
+          <label class="block font-medium">Teléfono<span class="text-red-500">*</span></label>
+          <input formControlName="telefono" type="text" placeholder="Teléfono"
+            class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+          <p *ngIf="f['telefono'].touched && f['telefono'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
+        </div>
+
+        <button type="submit"
+          class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+          Guardar
+        </button>
+        }
+    </form>
   </div>
 </div>
+
+<app-modal
+    [isOpen]="isOpen"
+    (close)="closeModal()"
+    className="max-w-[700px] p-6 lg:p-10"
+  >
+    <div class="flex flex-col px-2 overflow-y-auto custom-scrollbar">
+      <div>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          Plan your next big moment: schedule or edit an event to stay on track
+        </p>
+      </div>
+      <div class="mt-8">
+        <div>
+          <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+            Event Title
+          </label>
+        </div>
+      </div>
+
+      <div class="mt-6">
+        <label class="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">
+          Event Color
+        </label>
+      </div>
+
+      <div class="mt-6">
+        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+          Enter Start Date
+        </label>
+      </div>
+
+      <div class="mt-6">
+        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+          Enter End Date
+        </label>
+      </div>
+
+      <div class="flex items-center gap-3 mt-6 modal-footer sm:justify-end">
+        <button
+          (click)="closeModal()"
+          type="button"
+          class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:w-auto"
+        >
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </app-modal>
