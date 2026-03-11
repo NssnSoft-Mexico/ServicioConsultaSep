@@ -19,18 +19,18 @@
 
         <div>
           <label class="block font-medium">Primer Apellido<span class="text-red-500">*</span></label>
-          <input formControlName="primerApellido" type="text" placeholder="Primer Apellido" (keypress)="soloLetras($event)"
+          <input formControlName="paterno" type="text" placeholder="Primer Apellido" (keypress)="soloLetras($event)"
             class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-          <p *ngIf="f['primerApellido'].touched && f['primerApellido'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
-          <p *ngIf="f['primerApellido'].touched && f['primerApellido'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
+          <p *ngIf="f['paterno'].touched && f['paterno'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
+          <p *ngIf="f['paterno'].touched && f['paterno'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
         </div>
 
         <div>
           <label class="block font-medium">Segundo Apellido<span class="text-red-500">*</span></label>
-          <input formControlName="segundoApellido" type="text" placeholder="Segundo Apellido" (keypress)="soloLetras($event)"
+          <input formControlName="materno" type="text" placeholder="Segundo Apellido" (keypress)="soloLetras($event)"
             class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
-          <p *ngIf="f['segundoApellido'].touched && f['segundoApellido'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
-          <p *ngIf="f['segundoApellido'].touched && f['segundoApellido'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
+          <p *ngIf="f['materno'].touched && f['materno'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
+          <p *ngIf="f['materno'].touched && f['materno'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
         </div>
 
         <div>
@@ -59,7 +59,7 @@
 
         <div>
           <label class="block font-medium">Teléfono<span class="text-red-500">*</span></label>
-          <input formControlName="telefono" type="text" placeholder="Teléfono"
+          <input maxlength="12" formControlName="telefono" type="text" placeholder="Teléfono"
             class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
           <p *ngIf="f['telefono'].touched && f['telefono'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
         </div>
@@ -118,7 +118,7 @@
               </td>
   
               <td class="px-4 py-3 text-center text-gray-700">
-                {{ product.nombre + ' ' + product.primerApellido + ' ' + product.segundoApellido }}
+                {{ product.nombre + ' ' + product.paterno + ' ' + product.materno }}
               </td>
   
               <td class="px-4 py-3 text-center text-gray-700">

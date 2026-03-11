@@ -28,7 +28,6 @@ export class SigninFormComponent {
   isOpen = false;
   mostarTabla: boolean = false;
   form: FormGroup;
-  modalForm: FormGroup;
   datosModal: CedulaProfesional | null = null;
 
   constructor(
@@ -39,28 +38,16 @@ export class SigninFormComponent {
     this.form = this.fb.group({
       cedula: ['', [Validators.required]],
       nombre: ['', [Validators.required, this.letrasValidator]],
-      primerApellido: ['', [Validators.required, this.letrasValidator]],
-      segundoApellido: ['', [Validators.required, this.letrasValidator]],
+      paterno: ['', [Validators.required, this.letrasValidator]],
+      materno: ['', [Validators.required, this.letrasValidator]],
       institucion: ['', [Validators.required, this.letrasValidator]],
       carrera: ['', [Validators.required, this.letrasValidator]],
       correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required]]
-    });
-
-    this.modalForm = this.fb.group ({
-      nombre: [''],
-      primerApellido: [''],
-      segundoApellido: [''],
-      institucion: [''],
-      carrera: [''],
-      correo: [''],
-      telefono: ['']
+      telefono: ['', [Validators.required, Validators.maxLength(12)]]
     });
   }
 
   ngOnInit() {
-
-    // this.getDatosCedula();
     this.form.get('cedula')?.valueChanges.subscribe(valor => {
       if (valor && valor.length > 3) { 
         this.cedulaService.buscarCedula(valor).subscribe({
@@ -70,8 +57,8 @@ export class SigninFormComponent {
               
               this.form.patchValue({
                 nombre: data.nombre,
-                primerApellido: data.paterno,
-                segundoApellido: data.materno,
+                paterno: data.paterno,
+                materno: data.materno,
                 institucion: data.institucion,
                 carrera: data.carrera,
                 correo: data.correo,
@@ -89,8 +76,8 @@ export class SigninFormComponent {
             
             this.form.patchValue({
               nombre: '',
-              primerApellido: '',
-              segundoApellido: '',
+              paterno: '',
+              materno: '',
               institucion: '',
               carrera: '',
               correo: '',

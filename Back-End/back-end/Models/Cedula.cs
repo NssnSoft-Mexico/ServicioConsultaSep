@@ -16,10 +16,10 @@ namespace back_end.Models
         public string Nombre { get; set; }
 
         [Column("primer_apellido")]
-        public string PrimerApellido { get; set; }
+        public string paterno { get; set; }
 
         [Column("segundo_apellido")]
-        public string SegundoApellido { get; set; }
+        public string materno { get; set; }
 
         [Column("institucion")]
         public string Institucion { get; set; }

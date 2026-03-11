@@ -7,7 +7,6 @@ namespace back_end.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Registros> Registros { get; set; }
         public DbSet<CedulaProfesional> Cedulas { get; set; }
     }
 }
