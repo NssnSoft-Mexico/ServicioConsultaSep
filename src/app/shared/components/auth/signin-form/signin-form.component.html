@@ -11,7 +11,7 @@
       @if(muestraDatosCedula){
         <div>
           <label class="block font-medium">Nombre<span class="text-red-500">*</span></label>
-          <input formControlName="nombre" type="text" placeholder="Nombre"
+          <input formControlName="nombre" type="text" placeholder="Nombre" (keypress)="soloLetras($event)"
             class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
           <p *ngIf="f['nombre'].touched && f['nombre'].errors?.['required']" class="text-red-500 text-sm">El nombre es obligatorio</p>
           <p *ngIf="f['nombre'].touched && f['nombre'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo se permiten letras</p>
@@ -19,7 +19,7 @@
 
         <div>
           <label class="block font-medium">Primer Apellido<span class="text-red-500">*</span></label>
-          <input formControlName="primerApellido" type="text" placeholder="Primer Apellido"
+          <input formControlName="primerApellido" type="text" placeholder="Primer Apellido" (keypress)="soloLetras($event)"
             class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
           <p *ngIf="f['primerApellido'].touched && f['primerApellido'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
           <p *ngIf="f['primerApellido'].touched && f['primerApellido'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
@@ -27,7 +27,7 @@
 
         <div>
           <label class="block font-medium">Segundo Apellido<span class="text-red-500">*</span></label>
-          <input formControlName="segundoApellido" type="text" placeholder="Segundo Apellido"
+          <input formControlName="segundoApellido" type="text" placeholder="Segundo Apellido" (keypress)="soloLetras($event)"
             class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
           <p *ngIf="f['segundoApellido'].touched && f['segundoApellido'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
           <p *ngIf="f['segundoApellido'].touched && f['segundoApellido'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
@@ -35,7 +35,7 @@
 
         <div>
           <label class="block font-medium">Institución<span class="text-red-500">*</span></label>
-          <input formControlName="institucion" type="text" placeholder="Institución"
+          <input formControlName="institucion" type="text" placeholder="Institución" (keypress)="soloLetras($event)"
             class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
           <p *ngIf="f['institucion'].touched && f['institucion'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
           <p *ngIf="f['institucion'].touched && f['institucion'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>
@@ -43,7 +43,7 @@
 
         <div>
           <label class="block font-medium">Carrera<span class="text-red-500">*</span></label>
-          <input formControlName="carrera" type="text" placeholder="Carrera"
+          <input formControlName="carrera" type="text" placeholder="Carrera" (keypress)="soloLetras($event)"
             class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"/>
           <p *ngIf="f['carrera'].touched && f['carrera'].errors?.['required']" class="text-red-500 text-sm">Es obligatorio</p>
           <p *ngIf="f['carrera'].touched && f['carrera'].errors?.['soloLetras']" class="text-red-500 text-sm">Solo letras</p>

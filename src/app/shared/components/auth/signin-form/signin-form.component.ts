@@ -60,7 +60,7 @@ export class SigninFormComponent {
 
   ngOnInit() {
 
-    this.getDatosCedula();
+    // this.getDatosCedula();
     this.form.get('cedula')?.valueChanges.subscribe(valor => {
       if (valor && valor.length > 3) { 
         this.cedulaService.buscarCedula(valor).subscribe({
@@ -106,7 +106,7 @@ export class SigninFormComponent {
     this.cedulaService.obteneRegistros().subscribe({
       next: data => {
         this.resultado = data;
-        console.log(data)
+        // console.log(data)
       },
       error: err => {
         Swal.fire({
@@ -125,6 +125,15 @@ export class SigninFormComponent {
       return { soloLetras: true };
     }
     return null;
+  }
+  
+  soloLetras(event: KeyboardEvent) {
+    const char = event.key;
+    const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]$/;
+  
+    if (!regex.test(char)) {
+      event.preventDefault();
+    }
   }
 
   guardarRegistros() {
