@@ -38,6 +38,14 @@ namespace back_end.Controllers
             return Ok(cedula);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ObtenerCedulas()
+        {
+            var cedulas = await _context.Cedulas.ToListAsync();
+
+            return Ok(cedulas);
+        }
+
         [HttpGet("{cedula}")]
         public async Task<IActionResult> BuscarCedula(string cedula)
         {

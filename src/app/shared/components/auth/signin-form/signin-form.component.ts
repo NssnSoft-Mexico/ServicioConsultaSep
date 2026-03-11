@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -26,10 +26,10 @@ export class SigninFormComponent {
   muestraDatosCedula: boolean = false;
   resultado: any;
   isOpen = false;
+  mostarTabla: boolean = false;
   form: FormGroup;
   modalForm: FormGroup;
   datosModal: CedulaProfesional | null = null;
-
 
   constructor(
     private http: HttpClient, 
@@ -59,8 +59,10 @@ export class SigninFormComponent {
   }
 
   ngOnInit() {
+
+    this.getDatosCedula();
     this.form.get('cedula')?.valueChanges.subscribe(valor => {
-      if (valor && valor.length > 3) { // evitar buscar con valores muy cortos
+      if (valor && valor.length > 3) { 
         this.cedulaService.buscarCedula(valor).subscribe({
           next: data => {
             if (data) {
@@ -78,7 +80,11 @@ export class SigninFormComponent {
             }
           },
           error: err => {
-            Swal.fire("Sin registros encontrados");
+            Swal.fire({
+              title: "Sin registros encontrados!",
+              icon: "error",
+              draggable: true
+            });
             this.muestraDatosCedula = true;
             
             this.form.patchValue({
@@ -91,6 +97,23 @@ export class SigninFormComponent {
               telefono: ''
             });
           }
+        });
+      }
+    });
+  }
+
+  getDatosCedula() {
+    this.cedulaService.obteneRegistros().subscribe({
+      next: data => {
+        this.resultado = data;
+        console.log(data)
+      },
+      error: err => {
+        Swal.fire({
+          title: "Error al obtener los registros!",
+          text: err.message,
+          icon: "error",
+          draggable: true
         });
       }
     });
@@ -111,11 +134,28 @@ export class SigninFormComponent {
         this.cedulaService.guardarRegistro(datos)
           .subscribe({
             next: (res) => {
-              Swal.fire("Registro guardado correctamente")
-              // this.modalForm.patchValue(this.form.value);
-              this.datosModal = datos;
-              this.openModal();
-              this.form.reset();
+              Swal.fire({
+                text: "Esta seguro de guardar los registros!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Registrar",
+                cancelButtonText: "Cancelar"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  Swal.fire({
+                    text: "Datos de cedula guardados correctamente.",
+                    icon: "success"
+                  });
+
+                  this.datosModal = datos;
+                  this.openModal();
+                  this.form.reset();
+                  this.muestraDatosCedula = false;
+                  this.mostarTabla = true;
+                }
+              });             
             },
             error: (err) => {
               Swal.fire(err.message);
@@ -131,8 +171,11 @@ export class SigninFormComponent {
   }
 
   closeModal() {
+    this.muestraDatosCedula = false;
     this.isOpen = false;
     this.form.reset();
+    this.getDatosCedula();
+    this.mostarTabla = true;
   }
 
   get f() {

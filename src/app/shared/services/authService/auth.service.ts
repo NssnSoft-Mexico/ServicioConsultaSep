@@ -38,6 +38,13 @@ export class CedulaService {
       );
   }
 
+  obteneRegistros(): Observable<CedulaProfesional[]> {
+    return this.http.get<CedulaProfesional[]>(this.apiUrl + 'cedulas')
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: HttpErrorResponse) {
     let mensaje = 'Ocurrió un error inesperado';
     if (error.error?.mensaje) {
