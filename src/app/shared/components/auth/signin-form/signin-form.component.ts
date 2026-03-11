@@ -27,6 +27,9 @@ export class SigninFormComponent {
   resultado: any;
   isOpen = false;
   form: FormGroup;
+  modalForm: FormGroup;
+  datosModal: CedulaProfesional | null = null;
+
 
   constructor(
     private http: HttpClient, 
@@ -42,6 +45,16 @@ export class SigninFormComponent {
       carrera: ['', [Validators.required, this.letrasValidator]],
       correo: ['', [Validators.required, Validators.email]],
       telefono: ['', [Validators.required]]
+    });
+
+    this.modalForm = this.fb.group ({
+      nombre: [''],
+      primerApellido: [''],
+      segundoApellido: [''],
+      institucion: [''],
+      carrera: [''],
+      correo: [''],
+      telefono: ['']
     });
   }
 
@@ -98,7 +111,10 @@ export class SigninFormComponent {
         this.cedulaService.guardarRegistro(datos)
           .subscribe({
             next: (res) => {
-              Swal.fire("success", "Registro guardado correctamente")
+              Swal.fire("Registro guardado correctamente")
+              // this.modalForm.patchValue(this.form.value);
+              this.datosModal = datos;
+              this.openModal();
               this.form.reset();
             },
             error: (err) => {

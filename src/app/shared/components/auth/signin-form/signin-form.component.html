@@ -73,50 +73,58 @@
 </div>
 
 <app-modal
-    [isOpen]="isOpen"
-    (close)="closeModal()"
-    className="max-w-[700px] p-6 lg:p-10"
-  >
-    <div class="flex flex-col px-2 overflow-y-auto custom-scrollbar">
-      <div>
-        <p class="text-sm text-gray-500 dark:text-gray-400">
-          Plan your next big moment: schedule or edit an event to stay on track
-        </p>
-      </div>
-      <div class="mt-8">
-        <div>
-          <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-            Event Title
-          </label>
-        </div>
+  [isOpen]="isOpen"
+  (close)="closeModal()"
+  className="max-w-[700px] p-6 lg:p-10"
+>
+  <div class="flex flex-col px-2 overflow-y-auto custom-scrollbar">
+    <h2 class="text-xl font-bold mb-4">Datos guardados</h2>
+
+    <div *ngIf="datosModal">
+      <div class="mt-2">
+        <label class="font-medium">Nombre:</label>
+        <p class="border p-2 rounded bg-gray-50">{{ datosModal.nombre }}</p>
       </div>
 
-      <div class="mt-6">
-        <label class="block mb-4 text-sm font-medium text-gray-700 dark:text-gray-400">
-          Event Color
-        </label>
+      <div class="mt-2">
+        <label class="font-medium">Primer Apellido:</label>
+        <p class="border p-2 rounded bg-gray-50">{{ datosModal.paterno}}</p>
       </div>
 
-      <div class="mt-6">
-        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-          Enter Start Date
-        </label>
+      <div class="mt-2">
+        <label class="font-medium">Segundo Apellido:</label>
+        <p class="border p-2 rounded bg-gray-50">{{ datosModal.materno }}</p>
       </div>
 
-      <div class="mt-6">
-        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-          Enter End Date
-        </label>
+      <div class="mt-2">
+        <label class="font-medium">Institución:</label>
+        <p class="border p-2 rounded bg-gray-50">{{ datosModal.institucion }}</p>
       </div>
 
-      <div class="flex items-center gap-3 mt-6 modal-footer sm:justify-end">
-        <button
-          (click)="closeModal()"
-          type="button"
-          class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 sm:w-auto"
-        >
-          Cerrar
-        </button>
+      <div class="mt-2">
+        <label class="font-medium">Carrera:</label>
+        <p class="border p-2 rounded bg-gray-50">{{ datosModal.carrera }}</p>
+      </div>
+
+      <div class="mt-2">
+        <label class="font-medium">Correo:</label>
+        <p class="border p-2 rounded bg-gray-50">{{ datosModal.correo }}</p>
+      </div>
+
+      <div class="mt-2">
+        <label class="font-medium">Teléfono:</label>
+        <p class="border p-2 rounded bg-gray-50">{{ datosModal.telefono }}</p>
       </div>
     </div>
-  </app-modal>
+
+    <div class="flex items-center gap-3 mt-6 sm:justify-end">
+      <button
+        (click)="closeModal()"
+        type="button"
+        class="flex w-full justify-center rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 sm:w-auto"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</app-modal>

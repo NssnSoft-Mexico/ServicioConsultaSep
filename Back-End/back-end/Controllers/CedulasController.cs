@@ -23,7 +23,6 @@ namespace back_end.Controllers
         [HttpPost]
         public async Task<IActionResult> GuardarCedula(CedulaProfesional cedula)
         {
-            Console.WriteLine(cedula);
             var existe = await _context.Cedulas
                 .AnyAsync(c => c.Cedula == cedula.Cedula);
 
